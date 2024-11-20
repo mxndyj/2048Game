@@ -7,6 +7,7 @@ public class Tile {
     private static final HashMap<Integer, String> COLOR_MAP = new HashMap<>();
 
     static {
+    	//colors from original 2048 game
         COLOR_MAP.put(2, "#EEE4DA");
         COLOR_MAP.put(4, "#EDE0C8");
         COLOR_MAP.put(8, "#F2B179");
@@ -23,7 +24,7 @@ public class Tile {
     private int tileValue;
 
     public Tile() {
-        tileValue = 0; // empty tile. primitive obsession? might change later
+        tileValue = 0; // empty tile. might be primitive obsession? might change later
     }
 
     public boolean isEmpty() {
@@ -31,7 +32,7 @@ public class Tile {
     }
 
     public void setEmpty() {
-        tileValue = -1;
+        tileValue = 0;
     }
 
     public void setTileValue(int tileValue) {

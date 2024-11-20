@@ -1,6 +1,12 @@
 package model;
 
+
 import java.util.Random;
+/**
+ * The GameBoard class represents the game grid for the 2048 game.
+ * It initializes the board, spawns random tiles, and provides methods
+ * for displaying the board and accessing its state.
+ */
 
 public class GameBoard {
     private static final int SIZE = 4;
@@ -28,7 +34,7 @@ public class GameBoard {
     private void assignRandomValue() {
     	int value;
         //  lower probability for appearing 4
-        if (randomGenerator.nextInt(10) > 7) { // 2 out of 10 values 20% 
+        if (randomGenerator.nextInt(10) > 7) { // 3 out of 10 values 30% 
             value = 4;
         } else { // Remaining 7 out of 10 values 70 %
             value = 2;
@@ -45,10 +51,10 @@ public class GameBoard {
         //set tile value at an empty position
         gridBoard[rowIndex][columnIndex].setTileValue(value);
 
-        System.out.println("[" + value + "] Spawn at row : " + rowIndex + " col : " + columnIndex);
+        System.out.println("[" + value + "] Spawn at row : " + (rowIndex+1) + " col : " + (columnIndex+1));
     }
     
-    //deep copy
+    //deep copy of grid
     public Tile[][] getModelGridBoard() {
         Tile[][] copy = new Tile[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
@@ -71,7 +77,74 @@ public class GameBoard {
         }
         System.out.println();
     }
+    
+    // if board has another valid move (end condition) 
+    private boolean hasMove() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (gridBoard[i][j].isEmpty()) {
+                    return true;
+                }
 
+                if (i < SIZE - 1 && j < SIZE - 1) {
+                    if (gridBoard[i][j].getTileValue() == gridBoard[i + 1][j].getTileValue() ||
+                            gridBoard[i][j].getTileValue() == gridBoard[i][j + 1].getTileValue()) {
+                        return true;
+                    }
+                }
+
+                if (i == SIZE - 1 && j < SIZE - 1) {
+                    if (gridBoard[i][j].getTileValue() == gridBoard[i][j + 1].getTileValue()) {
+                        return true;
+                    }
+                }
+
+                if (j == SIZE - 1 && i < SIZE - 1) {
+                    if (gridBoard[i][j].getTileValue() == gridBoard[i + 1][j].getTileValue()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean isGameOver() {
+        return !hasMove();
+    }
+
+
+    // after a move, spawn another random tile
+    public void placeRandomTile() {
+        if (hasEmptyTile()) {
+            assignRandomValue(); 
+        } else {
+            System.out.println("No empty tiles available to place a new tile.");
+        }
+    }
+    
+    
+    //helper for placeRandomtile, checks if there is empty tile
+    private boolean hasEmptyTile() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (gridBoard[i][j].isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    
+    
+    
+    //move strategy
+    
+    
+    
+    
+    
 
 
 

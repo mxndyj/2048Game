@@ -34,9 +34,9 @@ public class GameBoard {
     private void assignRandomValue() {
     	int value;
         //  lower probability for appearing 4
-        if (randomGenerator.nextInt(10) > 7) { // 3 out of 10 values 30% 
+        if (randomGenerator.nextInt(10) >= 8) { // 2 out of 10 values 20% 
             value = 4;
-        } else { // Remaining 7 out of 10 values 70 %
+        } else { // Remaining 8 out of 10 values 80 %
             value = 2;
         }
         //  starting with a random index
@@ -109,12 +109,14 @@ public class GameBoard {
         return false;
     }
     
+    
+    
     public boolean isGameOver() {
         return !hasMove();
     }
 
 
-    // after a move, spawn another random tile
+    // after each move, spawn another random tile
     public void placeRandomTile() {
         if (hasEmptyTile()) {
             assignRandomValue(); 
@@ -139,8 +141,11 @@ public class GameBoard {
     
     
     
-    //move strategy
+    // MoveTileStrategy.java , MoveTileDown, MoveTileUp, MoveTileLeft, MoveTileRight
+    /*public int[]move(MoveTileStrategy strategy) {
+    return strategy.moveTile(gridBoard);}
     
+    */
     
     
     

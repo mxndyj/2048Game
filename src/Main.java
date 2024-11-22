@@ -35,7 +35,7 @@ public class Main {
         gameBoard.showTiles();
 
         if (result2[0] == 1) {
-            System.out.println("Move successful. Score added: " + result[1]);
+            System.out.println("Move successful. Score added: " + result2[1]);
         } else {
             System.out.println("Move not valid. No tiles moved.");
         }

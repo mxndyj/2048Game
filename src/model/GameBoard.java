@@ -140,12 +140,13 @@ public class GameBoard {
     
     
     
+    public int[] move(MoveTileStrategy strategy) {
+        return strategy.moveTile(gridBoard);
+    }
+    
     
     // MoveTileStrategy.java , MoveTileDown, MoveTileUp, MoveTileLeft, MoveTileRight
-    /*public int[]move(MoveTileStrategy strategy) {
-    return strategy.moveTile(gridBoard);}
-    
-    */
+
     
     
     

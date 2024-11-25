@@ -117,12 +117,14 @@ public class GameBoard {
 
 
     // after each move, spawn another random tile
-    public void placeRandomTile() {
+    public boolean placeRandomTile() {
         if (hasEmptyTile()) {
             assignRandomValue(); 
         } else {
             System.out.println("No empty tiles available to place a new tile.");
+            return false;
         }
+		return true;
     }
     
     
@@ -143,6 +145,11 @@ public class GameBoard {
     public int[] move(MoveTileStrategy strategy) {
         return strategy.moveTile(gridBoard);
     }
+
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
     
     
     // MoveTileStrategy.java , MoveTileDown, MoveTileUp, MoveTileLeft, MoveTileRight

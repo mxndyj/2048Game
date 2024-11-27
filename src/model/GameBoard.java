@@ -146,13 +146,9 @@ public class GameBoard {
         return strategy.moveTile(gridBoard);
     }
 
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
+
     
     
-    // MoveTileStrategy.java , MoveTileDown, MoveTileUp, MoveTileLeft, MoveTileRight
 
     
     

@@ -12,7 +12,7 @@ public class Leaderboard {
 		leaderboard = new TreeSet<Player>();
 	}
 	
-	public void insertPlayerInLeaderboard(Player newPlayer) {
+	public void addPlayerToLeaderboard(Player newPlayer) {
 		//Automatically inserts into TreeSet if it is empty or contains less than 10 elements
 		if (leaderboard.isEmpty() || leaderboard.size() < 10) {
 			leaderboard.add(new Player(newPlayer));

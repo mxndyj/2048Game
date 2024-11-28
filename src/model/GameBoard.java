@@ -1,7 +1,11 @@
 package model;
 
 
+import java.util.List;
 import java.util.Random;
+import leaderboard.Leaderboard;
+import leaderboard.Player;
+
 /**
  * The GameBoard class represents the game grid for the 2048 game.
  * It initializes the board, spawns random tiles, and provides methods
@@ -13,6 +17,7 @@ public class GameBoard {
 
     private Tile[][] gridBoard; 
     private final Random randomGenerator;
+    private Leaderboard leaderboard;
 
     public GameBoard() {
     	randomGenerator = new Random();
@@ -20,6 +25,7 @@ public class GameBoard {
         //start with two tiles
         assignRandomValue();
         assignRandomValue();
+        leaderboard = new Leaderboard();
     }
     
     public GameBoard(int gameboardSize) {
@@ -29,6 +35,7 @@ public class GameBoard {
         assignRandomValue();
         assignRandomValue();
     	SIZE = gameboardSize;
+    	leaderboard = new Leaderboard();
     }
 
     private void generateGrid() {
@@ -149,13 +156,19 @@ public class GameBoard {
         return false;
     }
     
-    
-    
     public int[] move(MoveTileStrategy strategy) {
         return strategy.moveTile(gridBoard);
     }
     
     public int getSize() {
     	return this.SIZE;
+    }
+    
+    public void addPlayerToLeaderboard(Player newPlayer) {
+    	leaderboard.addPlayerToLeaderboard(newPlayer);
+    }
+    
+    public List<String> getLeaderboard() {
+    	return leaderboard.getLeaderboard();
     }
 }

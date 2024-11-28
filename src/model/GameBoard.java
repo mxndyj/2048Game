@@ -9,17 +9,18 @@ import java.util.Random;
  */
 
 public class GameBoard {
-    private static final int SIZE = 4;
+    private static int SIZE;
 
     private Tile[][] gridBoard; 
     private final Random randomGenerator;
 
-    public GameBoard() {
+    public GameBoard(int gameboardSize) {
         randomGenerator = new Random();
         generateGrid();
         //start with two tiles
         assignRandomValue();
         assignRandomValue();
+    	SIZE = gameboardSize;
     }
 
     private void generateGrid() {
@@ -80,12 +81,12 @@ public class GameBoard {
     
     // if board has another valid move (end condition) 
     private boolean hasMove() {
+    	if (hasEmptyTile()) {
+    		return true;
+    	}
+    	
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (gridBoard[i][j].isEmpty()) {
-                    return true;
-                }
-
                 if (i < SIZE - 1 && j < SIZE - 1) {
                     if (gridBoard[i][j].getTileValue() == gridBoard[i + 1][j].getTileValue() ||
                             gridBoard[i][j].getTileValue() == gridBoard[i][j + 1].getTileValue()) {

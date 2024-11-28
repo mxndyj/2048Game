@@ -18,6 +18,7 @@ public class Player {
 		this.score = score;
 	}
 	
+	//Copy constructor for Player Class
 	public Player(Player otherPlayer) {
 		this.name = otherPlayer.name;
 		this.score = otherPlayer.score;
@@ -31,6 +32,7 @@ public class Player {
 		return this.score;
 	}
 	
+	//Compare the scores first and then if those are equal, then compare their names
 	public int compareTo(Player otherPlayer) {
 		return this.score == otherPlayer.score ? this.name.compareTo(otherPlayer.name) : ((Integer) this.score).compareTo(otherPlayer.score);
 	}

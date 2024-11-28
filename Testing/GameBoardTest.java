@@ -15,20 +15,18 @@ class GameBoardTest extends BaseGameBoardTest{
     void setUp() {
         gameBoard = new GameBoard();
     }
-
-    
     
     @Test
     void testInitialSetup() {
-        Tile[][] grid =getPrivateGridBoard(gameBoard);
+        Tile[][] grid = getPrivateGridBoard(gameBoard);
         int nonZeroTiles = countNonZeroTiles(grid);
         assertEquals(2, nonZeroTiles);
     }
 
     @Test
     void testPlaceRandomTile() {
-        gameBoard.placeRandomTile() ;
-        Tile[][] grid =getPrivateGridBoard(gameBoard);
+        gameBoard.placeRandomTile();
+        Tile[][] grid = getPrivateGridBoard(gameBoard);
         int nonZeroTiles = countNonZeroTiles(grid);
         assertEquals(3,nonZeroTiles);
     }
@@ -42,7 +40,7 @@ class GameBoardTest extends BaseGameBoardTest{
 
     @Test
     void testMoveWithValidStrategy() {
-        Tile[][]  grid=getPrivateGridBoard(gameBoard);
+        Tile[][] grid = getPrivateGridBoard(gameBoard);
         grid[3][0 ].setTileValue(2);
         grid[2][0].setTileValue(2);
 
@@ -102,8 +100,9 @@ class GameBoardTest extends BaseGameBoardTest{
 
         Tile[][] copiedBoard = gameBoard.getModelGridBoard();
 
-        int SIZE=4;
-        for (int i =0; i < SIZE; i++) 
+        int SIZE = gameBoard.getSize();
+        
+        for (int i =0; i < SIZE; i++)
         {
             for (int j = 0; j <SIZE; j++) {
                 assertEquals(

@@ -9,7 +9,7 @@ public class Leaderboard {
 	private TreeSet<Player> leaderboard;
 	
 	public Leaderboard() {
-		leaderboard = new TreeSet<Player>;
+		leaderboard = new TreeSet<Player>();
 	}
 	
 	public void insertPlayerInLeaderboard(Player newPlayer) {

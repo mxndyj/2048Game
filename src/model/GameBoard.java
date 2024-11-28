@@ -9,11 +9,19 @@ import java.util.Random;
  */
 
 public class GameBoard {
-    private static int SIZE;
+    private int SIZE;
 
     private Tile[][] gridBoard; 
     private final Random randomGenerator;
 
+    public GameBoard() {
+    	randomGenerator = new Random();
+        generateGrid();
+        //start with two tiles
+        assignRandomValue();
+        assignRandomValue();
+    }
+    
     public GameBoard(int gameboardSize) {
         randomGenerator = new Random();
         generateGrid();
@@ -146,16 +154,8 @@ public class GameBoard {
     public int[] move(MoveTileStrategy strategy) {
         return strategy.moveTile(gridBoard);
     }
-
-
     
-    
-
-    
-    
-    
-    
-
-
-
+    public int getSize() {
+    	return this.SIZE;
+    }
 }

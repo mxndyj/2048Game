@@ -14,12 +14,12 @@ import leaderboard.Player;
 
 public class GameBoard {
     private int SIZE;
-
     private Tile[][] gridBoard; 
     private final Random randomGenerator;
     private Leaderboard leaderboard;
 
     public GameBoard() {
+        SIZE = 4;
     	randomGenerator = new Random();
         generateGrid();
         //start with two tiles
@@ -29,12 +29,12 @@ public class GameBoard {
     }
     
     public GameBoard(int gameboardSize) {
+    	SIZE = gameboardSize;
         randomGenerator = new Random();
         generateGrid();
         //start with two tiles
         assignRandomValue();
         assignRandomValue();
-    	SIZE = gameboardSize;
     	leaderboard = new Leaderboard();
     }
 
@@ -56,9 +56,11 @@ public class GameBoard {
             value = 2;
         }
         //  starting with a random index
+        System.out.println(this.SIZE);
         int rowIndex = randomGenerator.nextInt(SIZE);
         int columnIndex = randomGenerator.nextInt(SIZE);
-
+        System.out.println(rowIndex);
+        System.out.println(columnIndex);
         // find an empty position
         while (!gridBoard[rowIndex][columnIndex].isEmpty()) {
             rowIndex = randomGenerator.nextInt(SIZE);

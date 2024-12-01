@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import view.GameBoardGUI;
 import view.TextBasedUI;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class GameBoardController {
             TextBasedUI textUI = new TextBasedUI(this);
             textUI.start();
         } else if (mode.equalsIgnoreCase("GUI")) {
-            System.out.println("GUI mode is not done yet.");
+            GameBoardGUI gui = new GameBoardGUI(this);
         } else {
             System.out.println("Invalid mode selected. Exiting.");
         }

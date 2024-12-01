@@ -13,7 +13,7 @@ public class Main {
         GameBoardController controller = new GameBoardController(model);
 
         controller.loadGame(mode);
-
+        
         scanner.close();
     }
 }

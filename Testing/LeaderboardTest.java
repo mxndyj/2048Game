@@ -14,11 +14,6 @@ class LeaderboardTest {
 	}
 	
 	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
-	
-	@Test
 	void emptyLeaderboard() {
 		assertEquals(leaderboard.getLeaderboard().size(), 0);
 	}

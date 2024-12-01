@@ -34,8 +34,9 @@ public class TextBasedUI {
                 System.out.println("Invalid move. Try again.");
             }
             
+         scanner.close();
+
         }
-        scanner.close();
         controller.displayFinalScore();
         
     }

@@ -1,34 +1,113 @@
 package controller;
 
 import model.*;
-import view.TextBasedUI;
+import view.*;
 
+import javax.swing.*;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameBoardController {
-    private final GameBoard model;
-    private final ScoreManager scoreManager;
+    private static final int SIZE = 4;
 
-    public GameBoardController(GameBoard model) {
+    private GameBoard model;
+    private GameBoardGUI view;
+    private WelcomeScreen welcomeScreen;
+    private ScoreManager scoreManager;
+    private String mode; // "GUI" or "TEXT"
+
+    public GameBoardController(GameBoard model, GameBoardGUI view, WelcomeScreen welcomeScreen, String mode) {
         this.model = model;
+        this.view = view;
+        this.welcomeScreen = welcomeScreen;
         this.scoreManager = ScoreManager.getScoreManager();
+        this.mode = mode;
+
+        if (mode.equals("GUI")) {
+            welcomeScreen.getLeaderboardButton().addActionListener(e -> displayLeaderboardGUI());
+        }
     }
 
-    public void loadGame(String mode) {
-        if (mode.equalsIgnoreCase("TEXT")) {
-            // text-based UI
-            TextBasedUI textUI = new TextBasedUI(this);
-            textUI.start();
-        } else if (mode.equalsIgnoreCase("GUI")) {
-            System.out.println("GUI mode is not done yet.");
-        } else {
-            System.out.println("Invalid mode selected. Exiting.");
+    public void loadGame() {
+        if (mode.equals("GUI")) {
+            welcomeScreen.setVisible(true);
+            view.addKeyListener(new KeyListener() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    handleKeyPress(e);
+                }
+
+                @Override
+                public void keyTyped(KeyEvent e) {}
+
+                @Override
+                public void keyReleased(KeyEvent e) {}
+            });
+            welcomeScreen.getStartButton().addActionListener(e -> {
+                welcomeScreen.dispose();
+                view.setVisible(true);
+            });
+            updateGameUI();
+        } else if (mode.equals("TEXT")) {
+            startTextBasedGame();
+        }
+    }
+
+    private void startTextBasedGame() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to 2048!");
+        displayGameBoard();
+
+        while (!isGameOver()) {
+            System.out.println("Enter a move (w=UP, s=DOWN, a=LEFT, d=RIGHT) or type 'leaderboard' to view scores, or 'end' to quit:");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("end")) {
+                displayFinalScore();
+                return;
+            } else if (input.equalsIgnoreCase("leaderboard")) {
+                displayLeaderboard();
+            } else if (handleInput(input)) {
+                spawnRandomTile();
+                displayGameBoard();
+            } else {
+                System.out.println("Invalid move. Try again.");
+            }
+        }
+        displayFinalScore();
+        scanner.close();
+    }
+
+    public void updateGameUI() {
+        if (mode.equals("GUI")) {
+            Tile[][] modelGridBoard = model.getModelGridBoard();
+            TileLabel[][] viewGridBoard = view.getViewGridBoard();
+
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    Tile tile = modelGridBoard[i][j];
+                    viewGridBoard[i][j].setTile(tile);
+                }
+            }
+
+            // Update score labels
+            view.getScoreLabel().setText(String.valueOf(scoreManager.getPlayerScore()));
+            view.getBestScoreLabel().setText(String.valueOf(scoreManager.getBestScore()));
         }
     }
 
     public void displayGameBoard() {
-        System.out.println("Current Score: " + getPlayerScore());
-        model.showTiles(); 
+        Tile[][] modelGridBoard = model.getModelGridBoard();
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                System.out.print((modelGridBoard[i][j].getTileValue() == 0 ? "." : modelGridBoard[i][j].getTileValue()) + "\t");
+            }
+            System.out.println();
+        }
     }
 
     public boolean handleInput(String input) {
@@ -43,56 +122,93 @@ public class GameBoardController {
         if (strategy != null) {
             int[] response = model.move(strategy);
             if (response[0] == 1) {
-                addScore(response[1]);
+                scoreManager.addScore(response[1]);
+                SoundEffect.playSound("src/sounds/move.wav");
+                System.out.println("Current Score: " + scoreManager.getPlayerScore());
                 return true;
             }
         }
         return false;
     }
 
-    public void spawnRandomTile() {
-        model.placeRandomTile();
+    private void handleKeyPress(KeyEvent e) {
+        MoveTileStrategy strategy = null;
+
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP -> strategy = new MoveTileUp();
+            case KeyEvent.VK_DOWN -> strategy = new MoveTileDown();
+            case KeyEvent.VK_LEFT -> strategy = new MoveTileLeft();
+            case KeyEvent.VK_RIGHT -> strategy = new MoveTileRight();
+        }
+
+        if (strategy != null) {
+            int[] response = model.move(strategy);
+            if (response[0] == 1) {
+                if (response[1] == 2048) {
+                	SoundEffect.playSound("src/sounds/win.wav");
+                    endGame(scoreManager.getPlayerScore(), scoreManager.getBestScore(), "Congratulations!!! You Won!!!");
+                }
+                SoundEffect.playSound("src/sounds/move.wav");
+                scoreManager.addScore(response[1]);
+                model.placeRandomTile();
+                model.showTiles();
+                updateGameUI();
+
+                if (model.isGameOver()) {
+                    JOptionPane.showMessageDialog(null, "No Available Moves!");
+                    endGame(scoreManager.getPlayerScore(), scoreManager.getBestScore(), "Game Over ! You Lost !");
+                }
+            }
+        }
     }
 
     public boolean isGameOver() {
         return model.isGameOver();
     }
 
+    public void spawnRandomTile() {
+        model.placeRandomTile();
+    }
+
     public void displayLeaderboard() {
-        System.out.println(getFormattedLeaderboard());
+        List<Integer> leaderboard = scoreManager.getLeaderboard();
+        System.out.println("Top 10 Scores:");
+        for (int i = 0; i < leaderboard.size(); i++) {
+            System.out.println((i + 1) + ". " + leaderboard.get(i));
+        }
+    }
+
+    private void displayLeaderboardGUI() {
+        List<Integer> leaderboard = scoreManager.getLeaderboard();
+        StringBuilder message = new StringBuilder("Top 10 Scores:\n");
+        for (int i = 0; i < leaderboard.size(); i++) {
+            message.append(i + 1).append(". ").append(leaderboard.get(i)).append("\n");
+        }
+        JOptionPane.showMessageDialog(null, message.toString(), "Leaderboard", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void displayFinalScore() {
         System.out.println("Game Over!");
-        System.out.println("Your Score: " + getPlayerScore());
-        System.out.println("Best Score: " + getBestScore());
-        finalizeScore();
-    }
-
-    //  helper methods for encapsulation
-    private int getPlayerScore() {
-        return scoreManager.getPlayerScore();
-    }
-
-    private int getBestScore() {
-        return scoreManager.getBestScore();
-    }
-
-    private void addScore(int points) {
-        scoreManager.addScore(points);
-    }
-
-    private void finalizeScore() {
+        System.out.println("Your Score: " + scoreManager.getPlayerScore());
+        System.out.println("Best Score: " + scoreManager.getBestScore());
         scoreManager.finalizeScore();
     }
 
-    private String getFormattedLeaderboard() {
-        List<Integer> leaderboard = scoreManager.getLeaderboard();
-        StringBuilder builder = new StringBuilder("Top 10 Scores:\n");
-        for (int i = 0; i < leaderboard.size(); i++) {
-            builder.append((i + 1)).append(". ").append(leaderboard.get(i)).append("\n");
+    public void endGame(int playerScore, int bestScore, String message) {
+        if (mode.equals("GUI")) {
+            scoreManager.finalizeScore();
+            EndingScreen screen = new EndingScreen(playerScore, bestScore, message);
+            screen.getPlayAgainButton().addActionListener(e -> {
+                screen.dispose();
+                model = new GameBoard();
+                scoreManager.clear();
+                updateGameUI();
+                view.setVisible(true);
+            });
+            view.dispose();
+            screen.setVisible(true);
         }
-        return builder.toString();
     }
 }
+
 

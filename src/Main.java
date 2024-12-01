@@ -1,5 +1,8 @@
+
 import controller.GameBoardController;
 import model.GameBoard;
+import view.GameBoardGUI;
+import view.WelcomeScreen;
 
 import java.util.Scanner;
 
@@ -10,10 +13,18 @@ public class Main {
         String mode = scanner.nextLine().toUpperCase();
 
         GameBoard model = new GameBoard();
-        GameBoardController controller = new GameBoardController(model);
+        GameBoardGUI view = new GameBoardGUI();
+        WelcomeScreen welcomeScreen = new WelcomeScreen();
 
-        controller.loadGame(mode);
+        GameBoardController controller = new GameBoardController(model, view, welcomeScreen, mode);
 
+        if (mode.equals("GUI")) {
+            controller.loadGame();
+        } else if (mode.equals("TEXT")) {
+            controller.loadGame();
+        } else {
+            System.out.println("Invalid mode selected. Exiting.");
+        }
         scanner.close();
     }
 }

@@ -59,6 +59,10 @@ public class ScoreManager {
     
 
     public List<Integer> getLeaderboard() {
+        return new ArrayList<>(loadLeaderboard()); 
+    }
+
+    private List<Integer> loadLeaderboard() {
         List<Integer> scores = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;

@@ -15,7 +15,7 @@ The objective of the game is to slide numbered tiles to combine them, with the g
 How to run our java implementation of 2048
 
 - Run `Main.java`
-- Enter desired view of the game (GUI or TEXT)
+- Enter desired view of the game (`GUI` or `TEXT`)
 
 ### For GUI View 
 - Start the game
@@ -30,12 +30,12 @@ How to run our java implementation of 2048
 
 
 ### For Text View 
-- Enter 'w' to slide blocks up
-- Enter 's' to slide blocks down
-- Enter 'a' to slide blocks left
-- Enter 'd' to slide blocks right
-- Enter 'leaderboard' to view scores of completed games 
-- Enter 'end' to quit
+- Enter `w` to slide blocks up
+- Enter `s` to slide blocks down
+- Enter `a` to slide blocks left
+- Enter `d` to slide blocks right
+- Enter `leaderboard` to view scores of completed games 
+- Enter `end` to quit
 
 _These commands will print out a text representation of the task_
 

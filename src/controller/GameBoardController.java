@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameBoardController {
-    private static final int SIZE = 4;
+	private static final int SIZE = 4;
 
     private GameBoard model;
     private GameBoardGUI view;
@@ -34,6 +34,7 @@ public class GameBoardController {
     public void loadGame() {
         if (mode.equals("GUI")) {
             welcomeScreen.setVisible(true);
+            SoundEffect.loopMusic("src/sounds/2048 - Twilight.wav");
             view.addKeyListener(new KeyListener() {
                 @Override
                 public void keyPressed(KeyEvent e) {
@@ -60,6 +61,7 @@ public class GameBoardController {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to 2048!");
+        SoundEffect.loopMusic("src/sounds/2048 - Twilight.wav");
         displayGameBoard();
 
         while (!isGameOver()) {
@@ -209,6 +211,5 @@ public class GameBoardController {
             screen.setVisible(true);
         }
     }
+	
 }
-
-

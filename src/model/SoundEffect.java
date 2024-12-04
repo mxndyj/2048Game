@@ -6,6 +6,10 @@ import java.io.IOException;
 
 public class SoundEffect {
 	
+	/**
+	 * 
+	 * @param soundFile - a string representing a sound file 
+	 */
 	public static void playSound(String soundFile) {
         try {
             File file = new File(soundFile);
@@ -18,6 +22,10 @@ public class SoundEffect {
         }
     }
 	
+	/**
+	 * 
+	 * @param soundFile - a string representing a sound file 
+	 */
 	public static void loopMusic(String soundFile) {
 		try {
 			File file = new File(soundFile);

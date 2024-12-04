@@ -5,9 +5,13 @@ import java.util.List;
 
 public class MoveTileLeft implements MoveTileStrategy {
 
-	
-	
-    @Override
+	/**
+	 * 
+	 * @param gridBoard is a board made up of Tile objects, representing the game 
+	 * 
+	 * @return total score after moving tile and if move was valid. 
+	 */
+	@Override
     public int[] moveTile(Tile[][] gridBoard) {
         int totalScore = 0;
         int isValidMove = 0;
@@ -52,7 +56,3 @@ public class MoveTileLeft implements MoveTileStrategy {
         return new int[]{isValidMove, totalScore};
     }
 }
-
-
-
-

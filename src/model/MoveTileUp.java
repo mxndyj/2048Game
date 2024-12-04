@@ -1,13 +1,17 @@
 package model;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MoveTileUp implements MoveTileStrategy {
-
-    @Override
+public class MoveTileUp implements MoveTileStrategy{
+	
+	/**
+	 * 
+	 * @param gridBoard is a board made up of Tile objects, representing the game 
+	 * 
+	 * @return total score after moving tile and if move was valid. 
+	 */
+	@Override
     public int[] moveTile(Tile[][] gridBoard) {
         int totalScore = 0;
         int isValidMove = 0;
@@ -52,6 +56,3 @@ public class MoveTileUp implements MoveTileStrategy {
         return new int[]{isValidMove, totalScore};
     }
 }
-
-
-

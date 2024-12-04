@@ -1,15 +1,10 @@
 package model;
 
-
 import java.util.Random;
-/**
- * The GameBoard class represents the game grid for the 2048 game.
- * It initializes the board, spawns random tiles, and provides methods
- * for displaying the board and accessing its state.
- */
 
 public class GameBoard {
-    private static final int SIZE = 4;
+	
+	private static final int SIZE = 4;
 
     private Tile[][] gridBoard; 
     private final Random randomGenerator;
@@ -141,20 +136,12 @@ public class GameBoard {
     }
     
     
-    
+    /**
+     * 
+     * @param strategy - object representing the direction user wants blocks to move in 
+     * 
+     */
     public int[] move(MoveTileStrategy strategy) {
         return strategy.moveTile(gridBoard);
     }
-
-
-    
-    
-
-    
-    
-    
-    
-
-
-
 }

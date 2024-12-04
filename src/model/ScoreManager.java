@@ -1,5 +1,7 @@
 package model;
 
+
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,8 +9,7 @@ import java.util.List;
 
 public class ScoreManager {
 	
-	
-    private int playerScore;
+	private int playerScore;
     private int bestScore;
     private static ScoreManager scoreManager;
     private static final String FILE_NAME = "score.txt";
@@ -28,7 +29,10 @@ public class ScoreManager {
     
     
     
-
+    /**
+     * 
+     * @param score - players score from playing game 
+     */
     public void addScore(int score) {
         playerScore +=score;
         if (playerScore  > bestScore) {
@@ -76,7 +80,10 @@ public class ScoreManager {
         return scores;
     }
 
-    
+    /**
+     * 
+     * @param score - players score from playing game 
+     */
     private void saveScoreToLeaderboard(int score) {
         List<Integer> scores = getLeaderboard();
         scores.add(score);
@@ -93,4 +100,3 @@ public class ScoreManager {
         }
     }
 }
-

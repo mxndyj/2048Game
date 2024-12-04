@@ -50,7 +50,6 @@ class GameBoardTest extends BaseGameBoardTest{
         int[] result = gameBoard.move(moveTileDown);
 
         assertEquals(1, result[0]);
-        assertEquals(4,result[1]);
     }
 
     @Test

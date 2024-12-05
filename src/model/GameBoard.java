@@ -139,6 +139,7 @@ public class GameBoard {
     /**
      * 
      * @param strategy - object representing the direction user wants blocks to move in 
+     * @pre a valid move strategy
      * 
      */
     public int[] move(MoveTileStrategy strategy) {

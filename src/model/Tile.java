@@ -24,7 +24,7 @@ public class Tile {
     private int tileValue;
 
     public Tile() {
-        tileValue = 0; // empty tile. might be primitive obsession? might change later
+        tileValue = 0; 
     }
 
     public boolean isEmpty() {
@@ -44,7 +44,7 @@ public class Tile {
     }
 
     public String getColor() {
-        return COLOR_MAP.getOrDefault(tileValue, "#CDC1B4"); // Default for empty tiles
+        return COLOR_MAP.getOrDefault(tileValue, "#CDC1B4");
     }
 
 

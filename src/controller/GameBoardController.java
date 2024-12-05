@@ -10,6 +10,12 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * The GameBoardController manages the flow of the 2048 game, including the interaction between
+ * the model (game logic) and the view (GUI or text-based interface).
+ */
+
 public class GameBoardController {
 	private static final int SIZE = 4;
 
@@ -57,6 +63,10 @@ public class GameBoardController {
         }
     }
 
+    
+    /**
+     * Starts the game in text-based mode, allowing user input via the console.
+     */
     private void startTextBasedGame() {
         Scanner scanner = new Scanner(System.in);
 
@@ -112,6 +122,12 @@ public class GameBoardController {
         }
     }
 
+    /**
+     * Handles user input in text based mode.
+     *
+     * @param input the user input (e.g., "w", "s", "a", "d").
+     * @return true if the move was successful, false else.
+     */
     public boolean handleInput(String input) {
         MoveTileStrategy strategy = null;
         switch (input.toLowerCase()) {
@@ -132,6 +148,13 @@ public class GameBoardController {
         }
         return false;
     }
+    
+    
+    /**
+     * Handles key press events in GUI mode.
+     *
+     * @param e the KeyEvent triggered by a key press.
+     */
 
     private void handleKeyPress(KeyEvent e) {
         MoveTileStrategy strategy = null;
@@ -196,6 +219,14 @@ public class GameBoardController {
         scoreManager.finalizeScore();
     }
 
+    
+    /**
+     * Ends the game and displays an ending screen in GUI mode.
+     *
+     * @param playerScore - the player's final score.
+     * @param bestScore  -  the best score achieved.
+     * @param message   -   the message to display on the ending screen.
+     */
     public void endGame(int playerScore, int bestScore, String message) {
         if (mode.equals("GUI")) {
             scoreManager.finalizeScore();

@@ -1,6 +1,11 @@
 package model;
 
 import java.util.Random;
+/**
+ * Represents the game board for a 2048 game.
+ * Manages the grid of tiles, spawning new tiles, checking game state, and executing moves.
+ */
+
 
 public class GameBoard {
 	
@@ -73,8 +78,11 @@ public class GameBoard {
         System.out.println();
     }
     
-    // if board has another valid move (end condition) 
-    private boolean hasMove() {
+    /**
+     * Checks if there are another move  left on the board.
+     *
+     * @return true if there are valid moves or empty tiles,else false.
+     */    private boolean hasMove() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (gridBoard[i][j].isEmpty()) {
@@ -137,10 +145,11 @@ public class GameBoard {
     
     
     /**
-     * 
-     * @param strategy - object representing the direction user wants blocks to move in 
-     * @pre a valid move strategy
-     * 
+     * Moves tiles in the grid based on the provided strategy.
+     *
+     * @param strategy - move strategy object determining the direction of the move.
+     * @pre strategy is a valid option/implementation of MoveTileStrategy.
+     * @return if move valid and score from move
      */
     public int[] move(MoveTileStrategy strategy) {
         return strategy.moveTile(gridBoard);

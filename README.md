@@ -11,6 +11,9 @@ The objective of the game is to slide numbered tiles to combine them, with the g
 
 - [2048 Game](https://play2048.co/)
 
+## Documentation 
+- [UML Diagram](https://lucid.app/lucidchart/0744903e-6557-4a57-aff8-c081313d65ee/edit?viewport_loc=-2141%2C-1091%2C5939%2C2702%2C0_0&invitationId=inv_52cfa5b4-e749-4d94-8095-704d832e952e)
+
 ## Instructions 
 How to run our java implementation of 2048
 
